@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Jae&#39;s Blog</title>
+  
+  <subtitle>Learn more, Know less.</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2019-08-06T05:37:59.081Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Jae</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hello hexo</title>
+    <link href="http://yoursite.com/2019/08/06/hello/"/>
+    <id>http://yoursite.com/2019/08/06/hello/</id>
+    <published>2019-08-06T05:26:51.000Z</published>
+    <updated>2019-08-06T05:37:59.081Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Hello-Hexo"><a href="#Hello-Hexo" class="headerlink" title="Hello Hexo"></a>Hello Hexo</h3><p>今天开始了个人博客的搭建，在此记录留念。希望自己能一直保持初心不忘。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Hello-Hexo&quot;&gt;&lt;a href=&quot;#Hello-Hexo&quot; class=&quot;headerlink&quot; title=&quot;Hello Hexo&quot;&gt;&lt;/a&gt;Hello Hexo&lt;/h3&gt;&lt;p&gt;今天开始了个人博客的搭建，在此记录留念。希望自己能一直保持初心不忘。&lt;/p&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="萌新报道" scheme="http://yoursite.com/tags/%E8%90%8C%E6%96%B0%E6%8A%A5%E9%81%93/"/>
+    
+  </entry>
+  
+</feed>
