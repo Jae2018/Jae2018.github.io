@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Jae&#39;s Blog</title>
+  
+  <subtitle>Learn more, Know less.</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2019-08-08T07:09:03.440Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Jae</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浏览器渲染的原理</title>
+    <link href="http://yoursite.com/2019/08/07/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E7%9A%84%E5%8E%9F%E7%90%86/"/>
+    <id>http://yoursite.com/2019/08/07/浏览器渲染的原理/</id>
+    <published>2019-08-07T06:35:37.000Z</published>
+    <updated>2019-08-08T07:09:03.440Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href https: coolshell.cn articles 9666.html"">(本文摘抄自耗子叔的博客，更多详情请查看原文)</a><br><a href https: developers.google.com web fundamentals performance rendering "">Google Developer的说明</a>，也可以直接查看cn的。</p><p><strong><em>以下是google上查找的浏览器重排的绘制视频：</em></strong><br><a href https: www.youtube.com watch?v="nJtBUHyNBxs&hl=zh-cn" ">YouTuBe上的浏览器reflow的视频：google.co.jp 重排</a><br><a href https: www.youtube.com watch?v="ZTnIxIA5KGw&hl=zh-cn" "">YouTuBe上的浏览器reflow的视频：mozilla.org 重排</a><br><a href https: www.youtube.com watch?v="dndeRnzkJDU&hl=zh-cn" "">YouTuBe上的浏览器reflow的视频：ja.wikipedia.org 重排</a></p><p><img src="/.com//image01.png" alt="图1"></p><p>1）浏览器会解析三个东西：</p><p>一个是HTML/SVG/XHTML，事实上，Webkit有三个C++的类对应这三类文档。解析这三种文件会产生一个DOM Tree。<br>CSS，解析CSS会产生CSS规则树。<br>JavaScript，脚本，主要是通过DOM API和CSSOM API来操作DOM Tree和CSS Rule Tree.</p><p>2）解析完成后，浏览器引擎会通过DOM Tree 和 CSS Rule Tree 来构造 Rendering Tree。注意：<br>Rendering Tree 渲染树并不等同于DOM树，因为一些像Header或display:none的东西就没必要放在渲染树中了。<br>CSS 的 Rule Tree主要是为了完成匹配并把CSS Rule附加上Rendering Tree上的每个Element。也就是DOM结点。也就是所谓的Frame。<br>然后，计算每个Frame（也就是每个Element）的位置，这又叫layout和reflow过程。</p><p>3）最后通过调用操作系统Native GUI的API绘制。<br>注意：CSS匹配HTML元素是一个相当复杂和有性能问题的事情。所以，你就会在N多地方看到很多人都告诉你，DOM树要小，CSS尽量用id和class，千万不要过渡层叠下去</p><p>这里要说两个重要概念，一个是Reflow，另一个是Repaint。这两个不是一回事。</p><ul><li>Repaint——屏幕的一部分要重画，比如某个CSS的背景色变了。但是元素的几何尺寸没有变。</li><li>Reflow——意味着元件的几何尺寸变了，我们需要重新验证并计算Render Tree。是Render Tree的一部分或全部发生了变化。这就是Reflow，或是Layout。（HTML使用的是flow based layout，也就是流式布局，所以，如果某元件的几何尺寸发生了变化，需要重新布局，也就叫reflow）reflow 会从<code>&lt;html&gt;</code>这个root frame开始递归往下，依次计算所有的结点几何尺寸和位置，在reflow过程中，可能会增加一些frame，比如一个文本字符串必需被包装起来。</li></ul><p>在一些高性能的电脑上也许还没什么，但是如果reflow发生在手机上，那么这个过程是非常痛苦和耗电的。<br>所以，下面这些动作有很大可能会是成本比较高的。</p><ul><li>当你增加、删除、修改DOM结点时，会导致Reflow或Repaint</li><li>当你移动DOM的位置，或是搞个动画的时候。</li><li>当你修改CSS样式的时候。</li><li>当你Resize窗口的时候（移动端没有这个问题），或是滚动的时候。</li><li>当你修改网页的默认字体时。<br>注：display:none会触发reflow，而visibility:hidden只会触发repaint，因为没有发现位置变化。</li></ul><p>基本上来说，reflow有如下的几个原因：</p><ul><li>Initial。网页初始化的时候。</li><li>Incremental。一些Javascript在操作DOM Tree时。</li><li>Resize。其些元件的尺寸变了。</li><li>StyleChange。如果CSS的属性发生变化了。</li><li>Dirty。几个Incremental的reflow发生在同一个frame的子树上。</li></ul><p><strong>减少reflow/repaint</strong><br>下面是一些Best Practices：</p><p>1）不要一条一条地修改DOM的样式。与其这样，还不如预先定义好css的class，然后修改DOM的className。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">var left = 10,</span><br><span class="line">top = 10;</span><br><span class="line">el.style.left = left + &quot;px&quot;;</span><br><span class="line">el.style.top  = top  + &quot;px&quot;;</span><br><span class="line"> </span><br><span class="line">// Good</span><br><span class="line">el.className += &quot; theclassname&quot;;</span><br><span class="line"> </span><br><span class="line">// Good</span><br><span class="line">el.style.cssText += &quot;; left: &quot; + left + &quot;px; top: &quot; + top + &quot;px;&quot;;</span><br></pre></td></tr></table></figure><p>2）把DOM离线后修改。（除非有必要）<br>如：使用documentFragment 对象在内存里操作DOM<br>先把DOM给display:none(有一次reflow)，然后你想怎么改就怎么改。比如修改100次，然后再把他显示出来。<br>clone一个DOM结点到内存里，然后想怎么改就怎么改，改完后，和在线的那个的交换一下。<br>3）不要把DOM结点的属性值放在一个循环里当成循环里的变量。不然这会导致大量地读写这个结点的属性。</p><p>4）尽可能的修改层级比较低的DOM。当然，改变层级比较底的DOM有可能会造成大面积的reflow，但是也可能影响范围很小。</p><p>5）为动画的HTML元件使用fixed或absoult的position，那么修改他们的CSS是不会reflow的。</p><p>6）千万不要使用table布局。因为可能很小的一个小改动会造成整个table的重新布局。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href https: coolshell.cn articles 9666.html&quot;&quot;&gt;(本文摘抄自耗子叔的博客，更多详情请查看原文)&lt;/a&gt;&lt;br&gt;&lt;a href https: developers.google.com web fundamentals per
+      
+    
+    </summary>
+    
+    
+      <category term="web前端知识储备" scheme="http://yoursite.com/tags/web%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E5%82%A8%E5%A4%87/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>web双向绑定的原理</title>
+    <link href="http://yoursite.com/2019/08/07/web%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E7%9A%84%E5%8E%9F%E7%90%86/"/>
+    <id>http://yoursite.com/2019/08/07/web双向绑定的原理/</id>
+    <published>2019-08-07T06:16:15.000Z</published>
+    <updated>2019-08-07T06:30:32.240Z</updated>
+    
+    <content type="html"><![CDATA[<p>JS方法Object.defineProperty()，此方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象。<br>1、语法<br><code>Object.defineProperty(obj, prop, descriptor)</code><br>2、参数<br>Obj：要在其上定义属性的对象。<br>Prop：要定义或修改的属性的名称。<br>Descriptor：将被定义或修改的属性描述符</p><p>数据描述符和存取描述符。数据描述符是一个具有值的属性，该值可能是可写的，也可能不是可写的。存取描述符是由getter-setter函数对描述的属性。描述符必须是这两种形式之一；不能同时是两者。<br>数据描述符和存取描述符均具有以下可选键值：</p><ul><li>configurable<br>当且仅当该属性的 configurable 为 true 时，该属性描述符才能够被改变，同时该属性也能从对应的对象上被删除。默认为 false。</li><li>enumerable<br>当且仅当该属性的enumerable为true时，该属性才能够出现在对象的枚举属性中。默认为 false。</li></ul><p>数据描述符同时具有以下可选键值：</p><ul><li><p>value<br>该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）。默认undefined。</p></li><li><p>writable<br>当且仅当该属性的writable为true时，value才能被赋值运算符改变。默认为 false。<br>存取描述符同时具有以下可选键值：</p></li><li><p>get<br>一个给属性提供 getter 的方法，如果没有 getter 则为 undefined。当访问该属性时，该方法会被执行，方法执行时没有参数传入，但是会传入this对象（由于继承关系，这里的this并不一定是定义该属性的对象）。<br>默认为 undefined。</p></li><li><p>set<br>一个给属性提供 setter 的方法，如果没有 setter 则为 undefined。当属性值修改时，触发执行该方法。该方法将接受唯一参数，即该属性新的参数值。<br>默认为 undefined。</p></li><li><p>描述符可同时具有的键值</p></li></ul><table><thead><tr><th align="center">configurable</th><th align="center">enumerable</th><th align="center">value</th><th align="center">writable</th><th align="center">get</th><th align="center">set</th></tr></thead><tbody><tr><td align="center">数据描述符</td><td align="center">Yes</td><td align="center">Yes</td><td align="center">Yes</td><td align="center">Yes</td><td align="center">No</td></tr><tr><td align="center">存取描述符</td><td align="center">Yes</td><td align="center">Yes</td><td align="center">No</td><td align="center">No</td><td align="center">Yes</td></tr></tbody></table><p>如果一个描述符不具有value,writable,get 和 set 任意一个关键字，那么它将被认为是一个数据描述符。如果一个描述符同时有(value或writable)和(get或set)关键字，将会产生一个异常。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;JS方法Object.defineProperty()，此方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象。&lt;br&gt;1、语法&lt;br&gt;&lt;code&gt;Object.defineProperty(obj, prop, descriptor)&lt;/co
+      
+    
+    </summary>
+    
+    
+      <category term="web前端知识储备" scheme="http://yoursite.com/tags/web%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E5%82%A8%E5%A4%87/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>单页面应用（SPA）的原理</title>
+    <link href="http://yoursite.com/2019/08/07/web%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E5%82%A8%E5%A4%87/"/>
+    <id>http://yoursite.com/2019/08/07/web前端知识储备/</id>
+    <published>2019-08-07T04:50:17.000Z</published>
+    <updated>2019-08-07T06:15:40.408Z</updated>
+    
+    <content type="html"><![CDATA[<p>##知识点1：路由</p><p>路由：导航、访问不同（文件）数据的一种解决方案（对于B、C端就是访问路径）。</p><p>先由后端提出的概念，最初基于BS结构，之后出现了Ajax、XMLHttpRequest ，刷新问题解决了。但是随着发展，尤其是SPA的发展，随着页面stack的不断压入、层级加深，一刷新就会回退回根页面（也就是初始页面）导致用户体验很差、并且不利于搜索引擎收录关键字；所以前段也出现了路由的概念（解析URL，基于innerHTML这一属性使同一DOM中加载指定路劲、不同文件HTML代码以达到不刷新页面就能展示新数据的目的）。</p><p>前端路由的实现方案：hash（2014年之前）与history（基于HTML5）</p><ul><li><p>1.Hash路由（#锚点后面的值）</p><p>  例如：<a href="https://xxx.com/xx/xx#xxxx" target="_blank" rel="noopener">https://xxx.com/xx/xx#xxxx</a> ，浏览器自带监听方法</p><p>  <code>window.addEventListener(&#39;hashchange&#39;, (e) =&gt; { //do some refresh }</code></p></li><li><p>2.history路由</p><p><code>history.pushState(state,title,url)，  history.replaceState(state,title,url)，</code></p><p>  然后可以通过ajax实现单页面的数据刷新效果。</p></li></ul><p>React、Vue、angular框架的路由也是基于这两种方式。而页面的刷新方式还采用了virtual DOM，计算与原DOM的匹配度，即修改了哪里，找出变化处，刷新局部UI。这个算法可能是树遍历或者map遍历，给每个component添加Index、对应的数据是否有无变化的布尔值，有，重新绘制组件，无就跳过。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;##知识点1：路由&lt;/p&gt;
+&lt;p&gt;路由：导航、访问不同（文件）数据的一种解决方案（对于B、C端就是访问路径）。&lt;/p&gt;
+&lt;p&gt;先由后端提出的概念，最初基于BS结构，之后出现了Ajax、XMLHttpRequest ，刷新问题解决了。但是随着发展，尤其是SPA的发展，随着页面
+      
+    
+    </summary>
+    
+    
+      <category term="web前端知识储备" scheme="http://yoursite.com/tags/web%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E5%82%A8%E5%A4%87/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hello hexo</title>
+    <link href="http://yoursite.com/2019/08/06/hello/"/>
+    <id>http://yoursite.com/2019/08/06/hello/</id>
+    <published>2019-08-06T05:26:51.000Z</published>
+    <updated>2019-08-07T02:05:34.500Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天开始了个人博客的搭建，在此记录留念。希望自己能一直保持初心不忘。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天开始了个人博客的搭建，在此记录留念。希望自己能一直保持初心不忘。&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="萌新报道" scheme="http://yoursite.com/tags/%E8%90%8C%E6%96%B0%E6%8A%A5%E9%81%93/"/>
+    
+  </entry>
+  
+</feed>

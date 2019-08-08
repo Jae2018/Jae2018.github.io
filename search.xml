@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[浏览器渲染的原理]]></title>
+    <url>%2F2019%2F08%2F07%2F%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E7%9A%84%E5%8E%9F%E7%90%86%2F</url>
+    <content type="text"><![CDATA[(本文摘抄自耗子叔的博客，更多详情请查看原文)Google Developer的说明，也可以直接查看cn的。 以下是google上查找的浏览器重排的绘制视频：]]></content>
+      <tags>
+        <tag>web前端知识储备</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[web双向绑定的原理]]></title>
+    <url>%2F2019%2F08%2F07%2Fweb%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E7%9A%84%E5%8E%9F%E7%90%86%2F</url>
+    <content type="text"><![CDATA[JS方法Object.defineProperty()，此方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性， 并返回这个对象。1、语法Object.defineProperty(obj, prop, descriptor)2、参数Obj：要在其上定义属性的对象。Prop：要定义或修改的属性的名称。Descriptor：将被定义或修改的属性描述符 数据描述符和存取描述符。数据描述符是一个具有值的属性，该值可能是可写的，也可能不是可写的。存取描述符是由getter-setter函数对描述的属性。描述符必须是这两种形式之一；不能同时是两者。数据描述符和存取描述符均具有以下可选键值： configurable当且仅当该属性的 configurable 为 true 时，该属性描述符才能够被改变，同时该属性也能从对应的对象上被删除。默认为 false。 enumerable当且仅当该属性的enumerable为true时，该属性才能够出现在对象的枚举属性中。默认为 false。 数据描述符同时具有以下可选键值： value该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）。默认undefined。 writable当且仅当该属性的writable为true时，value才能被赋值运算符改变。默认为 false。存取描述符同时具有以下可选键值： get一个给属性提供 getter 的方法，如果没有 getter 则为 undefined。当访问该属性时，该方法会被执行，方法执行时没有参数传入，但是会传入this对象（由于继承关系，这里的this并不一定是定义该属性的对象）。默认为 undefined。 set一个给属性提供 setter 的方法，如果没有 setter 则为 undefined。当属性值修改时，触发执行该方法。该方法将接受唯一参数，即该属性新的参数值。默认为 undefined。 描述符可同时具有的键值 configurable enumerable value writable get set 数据描述符 Yes Yes Yes Yes No 存取描述符 Yes Yes No No Yes 如果一个描述符不具有value,writable,get 和 set 任意一个关键字，那么它将被认为是一个数据描述符。如果一个描述符同时有(value或writable)和(get或set)关键字，将会产生一个异常。]]></content>
+      <tags>
+        <tag>web前端知识储备</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[单页面应用（SPA）的原理]]></title>
+    <url>%2F2019%2F08%2F07%2Fweb%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E5%82%A8%E5%A4%87%2F</url>
+    <content type="text"><![CDATA[##知识点1：路由 路由：导航、访问不同（文件）数据的一种解决方案（对于B、C端就是访问路径）。 先由后端提出的概念，最初基于BS结构，之后出现了Ajax、XMLHttpRequest ，刷新问题解决了。但是随着发展，尤其是SPA的发展，随着页面stack的不断压入、层级加深，一刷新就会回退回根页面（也就是初始页面）导致用户体验很差、并且不利于搜索引擎收录关键字；所以前段也出现了路由的概念（解析URL，基于innerHTML这一属性使同一DOM中加载指定路劲、不同文件HTML代码以达到不刷新页面就能展示新数据的目的）。 前端路由的实现方案：hash（2014年之前）与history（基于HTML5） 1.Hash路由（#锚点后面的值） 例如：https://xxx.com/xx/xx#xxxx ，浏览器自带监听方法 window.addEventListener(&#39;hashchange&#39;, (e) =&gt; { //do some refresh } 2.history路由 history.pushState(state,title,url)， history.replaceState(state,title,url)， 然后可以通过ajax实现单页面的数据刷新效果。 React、Vue、angular框架的路由也是基于这两种方式。而页面的刷新方式还采用了virtual DOM，计算与原DOM的匹配度，即修改了哪里，找出变化处，刷新局部UI。这个算法可能是树遍历或者map遍历，给每个component添加Index、对应的数据是否有无变化的布尔值，有，重新绘制组件，无就跳过。]]></content>
+      <tags>
+        <tag>web前端知识储备</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hello hexo]]></title>
+    <url>%2F2019%2F08%2F06%2Fhello%2F</url>
+    <content type="text"><![CDATA[今天开始了个人博客的搭建，在此记录留念。希望自己能一直保持初心不忘。]]></content>
+      <tags>
+        <tag>萌新报道</tag>
+      </tags>
+  </entry>
+</search>
