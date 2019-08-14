@@ -70,7 +70,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://img2.tbcdn.cn/L1/461/1/f4b04f3990e42231288c3590f2ff31b629f2f9f5">
 <meta property="og:image" content="https://images2015.cnblogs.com/blog/1113789/201703/1113789-20170317154601651-206880525.png">
-<meta property="og:updated_time" content="2019-08-14T06:46:19.523Z">
+<meta property="og:updated_time" content="2019-08-14T08:44:02.423Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android UI —— Activity、Window、View">
 <meta name="twitter:description" content="网上有很多关于此内容的文章，在此记录我认为重点的部分。 首先是概念性的东西：1、window、phoneWindow、decorView  window，抽象类，本质是surface。phoneWindow，window的实际实现类。decorView，实际显示中view层最顶层节点，由phoneWindow实例化。window按层级优先级排序分为三种，数字越大，优先级越高，越在最上面。">
@@ -306,7 +306,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-14 14:46:19" itemprop="dateModified" datetime="2019-08-14T14:46:19+08:00">2019-08-14</time>
+                <time title="修改时间：2019-08-14 16:44:02" itemprop="dateModified" datetime="2019-08-14T16:44:02+08:00">2019-08-14</time>
               </span>
             
           
@@ -344,7 +344,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>859</span>
+              <span>903</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -397,7 +397,7 @@
 </ul>
 <p>2、Activity、ActivityMangerService、ActivityThread调用关系</p>
 <p><img src="http://img2.tbcdn.cn/L1/461/1/f4b04f3990e42231288c3590f2ff31b629f2f9f5" alt="图1"></p>
-<p>3、View、ViewRoot、ViewRootImpl</p>
+<p>3、View、ViewRoot、ViewRootImpl<br>View的事件处理都在ViewRoot类中，然后通过Window回调给Activity。</p>
 <p>4、Activity、Window、View调用关系</p>
 <p><img src="https://images2015.cnblogs.com/blog/1113789/201703/1113789-20170317154601651-206880525.png" alt="图2"></p>
 <h3 id="相关引用资料"><a href="#相关引用资料" class="headerlink" title="相关引用资料"></a>相关引用资料</h3><p>1、<a href https: blog.csdn.net freekiteyu article details 79408969"">一篇文章看明白 Activity 与 Window 与 View 之间的关系</a><br>2、<a href https: blog.csdn.net yhaolpz article details 68936932"">Android 带你彻底理解 Window 和 WindowManager</a><br>3、<a href https: yq.aliyun.com articles 3005?utm_campaign="wenzhang&utm_medium=article&utm_source=QQ-qun&utm_content=m_8719" "">Android绘制流程</a><br>4、<a href https: www.cnblogs.com tiger-wang-ms p 6517048.html"">源码分析篇 - Android绘制流程（一）窗口启动流程分析</a></p>
