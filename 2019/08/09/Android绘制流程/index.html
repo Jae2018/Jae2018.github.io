@@ -60,22 +60,23 @@
   };
 </script>
 
-  <meta name="description" content="(本文摘抄自耗子叔的博客，更多详情请查看原文)Google Developer的说明，也可以直接查看cn的。 以下是google上查找的浏览器重排的绘制视频：">
-<meta name="keywords" content="web前端知识储备">
+  <meta name="description" content="网上有很多关于此内容的文章，在此记录我认为重点的部分。 首先是概念性的东西：1、window、phoneWindow、decorView  window，抽象类，本质是surface。phoneWindow，window的实际实现类。decorView，实际显示中view层最顶层节点，由phoneWindow实例化。window按层级优先级排序分为三种，数字越大，优先级越高，越在最上面。">
+<meta name="keywords" content="Android原理知识汇总">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浏览器渲染的原理">
-<meta property="og:url" content="http://yoursite.com/2019/08/07/浏览器渲染的原理/index.html">
+<meta property="og:title" content="Android UI —— Activity、Window、View">
+<meta property="og:url" content="http://yoursite.com/2019/08/09/Android绘制流程/index.html">
 <meta property="og:site_name" content="Jae&#39;s Blog">
-<meta property="og:description" content="(本文摘抄自耗子叔的博客，更多详情请查看原文)Google Developer的说明，也可以直接查看cn的。 以下是google上查找的浏览器重排的绘制视频：">
+<meta property="og:description" content="网上有很多关于此内容的文章，在此记录我认为重点的部分。 首先是概念性的东西：1、window、phoneWindow、decorView  window，抽象类，本质是surface。phoneWindow，window的实际实现类。decorView，实际显示中view层最顶层节点，由phoneWindow实例化。window按层级优先级排序分为三种，数字越大，优先级越高，越在最上面。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/.com//image01.png">
-<meta property="og:updated_time" content="2019-08-11T09:28:52.778Z">
+<meta property="og:image" content="http://img2.tbcdn.cn/L1/461/1/f4b04f3990e42231288c3590f2ff31b629f2f9f5">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/1113789/201703/1113789-20170317154601651-206880525.png">
+<meta property="og:updated_time" content="2019-08-14T06:46:19.523Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浏览器渲染的原理">
-<meta name="twitter:description" content="(本文摘抄自耗子叔的博客，更多详情请查看原文)Google Developer的说明，也可以直接查看cn的。 以下是google上查找的浏览器重排的绘制视频：">
-<meta name="twitter:image" content="http://yoursite.com/.com//image01.png">
+<meta name="twitter:title" content="Android UI —— Activity、Window、View">
+<meta name="twitter:description" content="网上有很多关于此内容的文章，在此记录我认为重点的部分。 首先是概念性的东西：1、window、phoneWindow、decorView  window，抽象类，本质是surface。phoneWindow，window的实际实现类。decorView，实际显示中view层最顶层节点，由phoneWindow实例化。window按层级优先级排序分为三种，数字越大，优先级越高，越在最上面。">
+<meta name="twitter:image" content="http://img2.tbcdn.cn/L1/461/1/f4b04f3990e42231288c3590f2ff31b629f2f9f5">
   <link rel="alternate" href="/atom.xml" title="Jae's Blog" type="application/atom+xml">
-  <link rel="canonical" href="http://yoursite.com/2019/08/07/浏览器渲染的原理/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/09/Android绘制流程/">
 
 
 <script id="page-configurations">
@@ -89,7 +90,7 @@
   };
 </script>
 
-  <title>浏览器渲染的原理 | Jae's Blog</title>
+  <title>Android UI —— Activity、Window、View | Jae's Blog</title>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-145137287-1"></script>
   <script>
@@ -263,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/07/浏览器渲染的原理/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/09/Android绘制流程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jae">
@@ -277,7 +278,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">浏览器渲染的原理
+          <h1 class="post-title" itemprop="name headline">Android UI —— Activity、Window、View
 
             
           </h1>
@@ -294,7 +295,7 @@
                 
               
 
-              <time title="创建时间：2019-08-07 14:35:37" itemprop="dateCreated datePublished" datetime="2019-08-07T14:35:37+08:00">2019-08-07</time>
+              <time title="创建时间：2019-08-09 11:02:13" itemprop="dateCreated datePublished" datetime="2019-08-09T11:02:13+08:00">2019-08-09</time>
             </span>
           
             
@@ -305,7 +306,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-11 17:28:52" itemprop="dateModified" datetime="2019-08-11T17:28:52+08:00">2019-08-11</time>
+                <time title="修改时间：2019-08-14 14:46:19" itemprop="dateModified" datetime="2019-08-14T14:46:19+08:00">2019-08-14</time>
               </span>
             
           
@@ -328,8 +329,8 @@
     </span>
     <span class="post-meta-item-text">评论数：</span>
   
-    <a href="/2019/08/07/浏览器渲染的原理/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/07/浏览器渲染的原理/" itemprop="commentCount"></span>
+    <a href="/2019/08/09/Android绘制流程/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/09/Android绘制流程/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -343,7 +344,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>79</span>
+              <span>859</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -366,43 +367,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><a href https: coolshell.cn articles 9666.html"">(本文摘抄自耗子叔的博客，更多详情请查看原文)</a><br><a href https: developers.google.com web fundamentals performance rendering "">Google Developer的说明</a>，也可以直接查看cn的。</p>
-<p><strong><em>以下是google上查找的浏览器重排的绘制视频：</em></strong><br><a href https: www.youtube.com watch?v="nJtBUHyNBxs&hl=zh-cn" ">YouTuBe上的浏览器reflow的视频：google.co.jp 重排</a><br><a href https: www.youtube.com watch?v="ZTnIxIA5KGw&hl=zh-cn" "">YouTuBe上的浏览器reflow的视频：mozilla.org 重排</a><br><a href https: www.youtube.com watch?v="dndeRnzkJDU&hl=zh-cn" "">YouTuBe上的浏览器reflow的视频：ja.wikipedia.org 重排</a></p>
-<p><img src="/.com//image01.png" alt="图1"></p>
-<p>1）浏览器会解析三个东西：</p>
-<p>一个是HTML/SVG/XHTML，事实上，Webkit有三个C++的类对应这三类文档。解析这三种文件会产生一个DOM Tree。<br>CSS，解析CSS会产生CSS规则树。<br>JavaScript，脚本，主要是通过DOM API和CSSOM API来操作DOM Tree和CSS Rule Tree.</p>
-<p>2）解析完成后，浏览器引擎会通过DOM Tree 和 CSS Rule Tree 来构造 Rendering Tree。注意：<br>Rendering Tree 渲染树并不等同于DOM树，因为一些像Header或display:none的东西就没必要放在渲染树中了。<br>CSS 的 Rule Tree主要是为了完成匹配并把CSS Rule附加上Rendering Tree上的每个Element。也就是DOM结点。也就是所谓的Frame。<br>然后，计算每个Frame（也就是每个Element）的位置，这又叫layout和reflow过程。</p>
-<p>3）最后通过调用操作系统Native GUI的API绘制。<br>注意：CSS匹配HTML元素是一个相当复杂和有性能问题的事情。所以，你就会在N多地方看到很多人都告诉你，DOM树要小，CSS尽量用id和class，千万不要过渡层叠下去</p>
-<p>这里要说两个重要概念，一个是Reflow，另一个是Repaint。这两个不是一回事。</p>
+        <p>网上有很多关于此内容的文章，在此记录我认为重点的部分。</p>
+<p>首先是概念性的东西：<br>1、window、phoneWindow、decorView</p>
 <ul>
-<li>Repaint——屏幕的一部分要重画，比如某个CSS的背景色变了。但是元素的几何尺寸没有变。</li>
-<li>Reflow——意味着元件的几何尺寸变了，我们需要重新验证并计算Render Tree。是Render Tree的一部分或全部发生了变化。这就是Reflow，或是Layout。（HTML使用的是flow based layout，也就是流式布局，所以，如果某元件的几何尺寸发生了变化，需要重新布局，也就叫reflow）reflow 会从<code>&lt;html&gt;</code>这个root frame开始递归往下，依次计算所有的结点几何尺寸和位置，在reflow过程中，可能会增加一些frame，比如一个文本字符串必需被包装起来。</li>
+<li>window，抽象类，本质是surface。phoneWindow，window的实际实现类。decorView，实际显示中view层最顶层节点，由phoneWindow实例化。window按层级优先级排序分为三种，数字越大，优先级越高，越在最上面。</li>
 </ul>
-<p>在一些高性能的电脑上也许还没什么，但是如果reflow发生在手机上，那么这个过程是非常痛苦和耗电的。<br>所以，下面这些动作有很大可能会是成本比较高的。</p>
+<table>
+<thead>
+<tr>
+<th align="center">window</th>
+<th align="center">层级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">应用window</td>
+<td align="center">1 ~ 99</td>
+</tr>
+<tr>
+<td align="center">子window</td>
+<td align="center">1000 ~ 1999</td>
+</tr>
+<tr>
+<td align="center">系统window</td>
+<td align="center">2000 ~ 2999</td>
+</tr>
+</tbody></table>
 <ul>
-<li>当你增加、删除、修改DOM结点时，会导致Reflow或Repaint</li>
-<li>当你移动DOM的位置，或是搞个动画的时候。</li>
-<li>当你修改CSS样式的时候。</li>
-<li>当你Resize窗口的时候（移动端没有这个问题），或是滚动的时候。</li>
-<li>当你修改网页的默认字体时。</li>
+<li>WindowManger、WindowMangerImpl、WindowMangerGlobal、WindowMangerService<br>WindowManger是扩展了ViewManger的接口；WindowMangerImpl是其简单的实现类、所有工作交给了WindowMangerGlobal实体去处理，管理着所有window下面所有的view、viewgroup、ViewRootImpl 。WindowMangerService是Android系统架构中的管理所有窗口的服务类，它会为每个应用分配一个session，WindowMangerGlobal会通过IWindowSession这一Binder对象调用session，session再调用WMS来处理window</li>
 </ul>
-<p>注：display:none会触发reflow，而visibility:hidden只会触发repaint，因为没有发现位置变化。</p>
-<p>基本上来说，reflow有如下的几个原因：</p>
-<ul>
-<li>Initial。网页初始化的时候。</li>
-<li>Incremental。一些Javascript在操作DOM Tree时。</li>
-<li>Resize。其些元件的尺寸变了。</li>
-<li>StyleChange。如果CSS的属性发生变化了。</li>
-<li>Dirty。几个Incremental的reflow发生在同一个frame的子树上。</li>
-</ul>
-<p><strong>减少reflow/repaint</strong><br>下面是一些Best Practices：</p>
-<p>1）不要一条一条地修改DOM的样式。与其这样，还不如预先定义好css的class，然后修改DOM的className。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">var left = 10,</span><br><span class="line">top = 10;</span><br><span class="line">el.style.left = left + <span class="string">"px"</span>;</span><br><span class="line">el.style.top  = top  + <span class="string">"px"</span>;</span><br><span class="line"></span><br><span class="line">// Good</span><br><span class="line">el.className += <span class="string">" theclassname"</span>;</span><br><span class="line"></span><br><span class="line">// Good</span><br><span class="line">el.style.cssText += <span class="string">"; left: "</span> + left + <span class="string">"px; top: "</span> + top + <span class="string">"px;"</span>;</span><br></pre></td></tr></table></figure>
-
-<p>2）把DOM离线后修改。（除非有必要）<br>如：使用documentFragment 对象在内存里操作DOM<br>先把DOM给display:none(有一次reflow)，然后你想怎么改就怎么改。比如修改100次，然后再把他显示出来。<br>clone一个DOM结点到内存里，然后想怎么改就怎么改，改完后，和在线的那个的交换一下。<br>3）不要把DOM结点的属性值放在一个循环里当成循环里的变量。不然这会导致大量地读写这个结点的属性。</p>
-<p>4）尽可能的修改层级比较低的DOM。当然，改变层级比较底的DOM有可能会造成大面积的reflow，但是也可能影响范围很小。</p>
-<p>5）为动画的HTML元件使用fixed或absoult的position，那么修改他们的CSS是不会reflow的。</p>
-<p>6）千万不要使用table布局。因为可能很小的一个小改动会造成整个table的重新布局。</p>
+<p>2、Activity、ActivityMangerService、ActivityThread调用关系</p>
+<p><img src="http://img2.tbcdn.cn/L1/461/1/f4b04f3990e42231288c3590f2ff31b629f2f9f5" alt="图1"></p>
+<p>3、View、ViewRoot、ViewRootImpl</p>
+<p>4、Activity、Window、View调用关系</p>
+<p><img src="https://images2015.cnblogs.com/blog/1113789/201703/1113789-20170317154601651-206880525.png" alt="图2"></p>
+<h3 id="相关引用资料"><a href="#相关引用资料" class="headerlink" title="相关引用资料"></a>相关引用资料</h3><p>1、<a href https: blog.csdn.net freekiteyu article details 79408969"">一篇文章看明白 Activity 与 Window 与 View 之间的关系</a><br>2、<a href https: blog.csdn.net yhaolpz article details 68936932"">Android 带你彻底理解 Window 和 WindowManager</a><br>3、<a href https: yq.aliyun.com articles 3005?utm_campaign="wenzhang&utm_medium=article&utm_source=QQ-qun&utm_content=m_8719" "">Android绘制流程</a><br>4、<a href https: www.cnblogs.com tiger-wang-ms p 6517048.html"">源码分析篇 - Android绘制流程（一）窗口启动流程分析</a></p>
 
     </div>
 
@@ -439,7 +437,7 @@
           
         
         <div class="post-tags">
-            <a href="/tags/web前端知识储备/" rel="tag"># web前端知识储备</a>
+            <a href="/tags/Android原理知识汇总/" rel="tag"># Android原理知识汇总</a>
           
         </div>
         <div class="post-widgets">
@@ -469,8 +467,8 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
-              <a href="/2019/08/07/web双向绑定的原理/" rel="next" title="web双向绑定的原理">
-                <i class="fa fa-chevron-left"></i> web双向绑定的原理
+              <a href="/2019/08/07/浏览器渲染的原理/" rel="next" title="浏览器渲染的原理">
+                <i class="fa fa-chevron-left"></i> 浏览器渲染的原理
               </a>
             
           </div>
@@ -478,8 +476,8 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-              <a href="/2019/08/09/Android绘制流程/" rel="prev" title="Android UI —— Activity、Window、View">
-                Android UI —— Activity、Window、View <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/14/Android-Proguard记录及通用配置/" rel="prev" title="Android Proguard记录及通用配置">
+                Android Proguard记录及通用配置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -520,8 +518,17 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -599,6 +606,23 @@
 
         </div>
       </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关引用资料"><span class="nav-number">1.</span> <span class="nav-text">相关引用资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
     </div>
   </aside>
@@ -742,9 +766,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "http://yoursite.com/2019/08/07/浏览器渲染的原理/";
-    this.page.identifier = "2019/08/07/浏览器渲染的原理/";
-    this.page.title = '浏览器渲染的原理';};
+    this.page.url = "http://yoursite.com/2019/08/09/Android绘制流程/";
+    this.page.identifier = "2019/08/09/Android绘制流程/";
+    this.page.title = 'Android UI —— Activity、Window、View';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
